@@ -121,6 +121,9 @@ public class JFrameLogin extends javax.swing.JFrame {
         
         if(controller.iniciarSesion(usuario, pass)){
             JOptionPane.showMessageDialog(null, "Inicio de sesión exitoso", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+            this.dispose();
+            JFrameMain main = new JFrameMain();
+            main.setVisible(true);
         }else{
             JOptionPane.showMessageDialog(null, "Credenciales inválidas", "Error", JOptionPane.ERROR_MESSAGE);
         }

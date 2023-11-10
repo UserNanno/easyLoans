@@ -28,13 +28,13 @@ public class JFrameMain extends javax.swing.JFrame {
 
         jLabel3 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        btnVerificarUsuario = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         txtDniUsuario = new javax.swing.JTextField();
         btnRegistrar = new javax.swing.JButton();
         btnPrestamo = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblDatosUsuario = new javax.swing.JTable();
 
         jLabel3.setText("jLabel3");
 
@@ -42,20 +42,36 @@ public class JFrameMain extends javax.swing.JFrame {
 
         jLabel1.setText("CONSULTAS");
 
-        jButton1.setText("Verificar Usuario");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnVerificarUsuario.setText("Verificar Usuario");
+        btnVerificarUsuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnVerificarUsuarioActionPerformed(evt);
             }
         });
 
         jLabel2.setText("Dni Usuario");
 
+        txtDniUsuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtDniUsuarioActionPerformed(evt);
+            }
+        });
+
         btnRegistrar.setText("Registrar Usuario");
+        btnRegistrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegistrarActionPerformed(evt);
+            }
+        });
 
         btnPrestamo.setText("Prestamo Libro");
+        btnPrestamo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPrestamoActionPerformed(evt);
+            }
+        });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblDatosUsuario.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -66,7 +82,7 @@ public class JFrameMain extends javax.swing.JFrame {
                 "Dni", "Nombres", "Apellidos", "Estado"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tblDatosUsuario);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -80,7 +96,7 @@ public class JFrameMain extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(txtDniUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(38, 38, 38)
-                        .addComponent(jButton1))
+                        .addComponent(btnVerificarUsuario))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(29, 29, 29)
                         .addComponent(btnRegistrar)
@@ -101,7 +117,7 @@ public class JFrameMain extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
+                    .addComponent(btnVerificarUsuario)
                     .addComponent(jLabel2)
                     .addComponent(txtDniUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(26, 26, 26)
@@ -116,9 +132,25 @@ public class JFrameMain extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnVerificarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerificarUsuarioActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnVerificarUsuarioActionPerformed
+
+    private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
+        // TODO add your handling code here:
+        JFrameRegistro registro = new JFrameRegistro();
+        registro.setVisible(true);
+    }//GEN-LAST:event_btnRegistrarActionPerformed
+
+    private void btnPrestamoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrestamoActionPerformed
+        // TODO add your handling code here:
+        JFramePrestamo prestamo = new JFramePrestamo();
+        prestamo.setVisible(true);
+    }//GEN-LAST:event_btnPrestamoActionPerformed
+
+    private void txtDniUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDniUsuarioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtDniUsuarioActionPerformed
 
     /**
      * @param args the command line arguments
@@ -158,12 +190,12 @@ public class JFrameMain extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnPrestamo;
     private javax.swing.JButton btnRegistrar;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btnVerificarUsuario;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable tblDatosUsuario;
     private javax.swing.JTextField txtDniUsuario;
     // End of variables declaration//GEN-END:variables
 }
