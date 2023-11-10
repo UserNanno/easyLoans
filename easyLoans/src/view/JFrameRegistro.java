@@ -1,9 +1,12 @@
 package view;
 
+import javax.swing.JFrame;
+
 public class JFrameRegistro extends javax.swing.JFrame {
 
     public JFrameRegistro() {
         initComponents();
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); //Evitar que se cierre el programa al cerrar la ventana actual
     }
     
     @SuppressWarnings("unchecked")

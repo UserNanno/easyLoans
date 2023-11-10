@@ -3,11 +3,15 @@ package view;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import javax.swing.JFrame;
 
 public class JFramePrestamo extends javax.swing.JFrame {
 
     public JFramePrestamo() {
         initComponents();
+        
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        
         // Configurar la fecha mínima como la fecha actual
         jdcFechaDevolucion.setMinSelectableDate(new Date());
 
