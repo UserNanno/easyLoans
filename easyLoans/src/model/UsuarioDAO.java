@@ -15,14 +15,14 @@ public class UsuarioDAO {
         this.conexion = conexion;
     }
 
-    public boolean verificarCredenciales(String nombreUsuario, String contraseña) {
+    public boolean verificarCredenciales(String nombreUsuario, String contrasena) {
         try {
             Connection connection = conexion.obtenerConexion();
             if (connection != null) {
-                String query = "SELECT * FROM Usuarios WHERE nombre_usuario = ? AND contraseña = ?";
+                String query = "SELECT * FROM administradores WHERE user = ? AND password = ?";
                 PreparedStatement preparedStatement = connection.prepareStatement(query);
                 preparedStatement.setString(1, nombreUsuario);
-                preparedStatement.setString(2, contraseña);
+                preparedStatement.setString(2, contrasena);
                 ResultSet resultSet = preparedStatement.executeQuery();
 
                 return resultSet.next(); // Si existe un resultado, las credenciales son correctas

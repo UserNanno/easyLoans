@@ -4,7 +4,7 @@ import model.UsuarioDAO;
 import persistencia.ConexionMysql;
 
 public class InicioSesionController {
-    private UsuarioDAO usuarioDAO;
+    private final UsuarioDAO usuarioDAO;
 
     public InicioSesionController() {
         this.usuarioDAO = new UsuarioDAO(new ConexionMysql()); // Instanciar el DAO
