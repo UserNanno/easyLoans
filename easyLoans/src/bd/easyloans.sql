@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 10-11-2023 a las 07:14:45
+-- Tiempo de generación: 11-11-2023 a las 01:50:26
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.2.4
 
@@ -32,6 +32,14 @@ CREATE TABLE `administradores` (
   `user` varchar(50) NOT NULL,
   `password` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `administradores`
+--
+
+INSERT INTO `administradores` (`id_admin`, `user`, `password`) VALUES
+(1, '21200223', 'xmldoot'),
+(2, '21200222', 'xmlroot');
 
 -- --------------------------------------------------------
 
@@ -85,6 +93,13 @@ CREATE TABLE `usuario_prestamo` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
+-- Volcado de datos para la tabla `usuario_prestamo`
+--
+
+INSERT INTO `usuario_prestamo` (`dni_usuario`, `nombres`, `apellidos`) VALUES
+('78801600', 'Juan Mariano', 'Canecillas Contreras');
+
+--
 -- Índices para tablas volcadas
 --
 
@@ -129,7 +144,7 @@ ALTER TABLE `usuario_prestamo`
 -- AUTO_INCREMENT de la tabla `administradores`
 --
 ALTER TABLE `administradores`
-  MODIFY `id_admin` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_admin` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `categorias`
