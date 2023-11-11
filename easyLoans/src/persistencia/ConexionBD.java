@@ -9,8 +9,16 @@ public class ConexionBD {
     private static final String USERNAME = "root";
     private static final String PASSWORD = "";
     private static Connection connection;
+    private static ConexionBD instancia = null;
 
     private ConexionBD() {} // Para prevenir la creación de instancias se crea un constructor privado
+    
+    public static ConexionBD obtenerInstancia() {
+        if (instancia == null) {
+            instancia = new ConexionBD();
+        }
+        return instancia;
+    }
 
     public static Connection obtenerConexion() {
         if (connection == null) {

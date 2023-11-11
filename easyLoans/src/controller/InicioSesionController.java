@@ -1,16 +1,16 @@
 package controller;
 
-import model.UsuarioDAO;
+import model.AdministradorDAO;
 import persistencia.ConexionMysql;
 
 public class InicioSesionController {
-    private final UsuarioDAO usuarioDAO;
+    private final AdministradorDAO adminDAO;
 
     public InicioSesionController() {
-        this.usuarioDAO = new UsuarioDAO(new ConexionMysql()); // Instanciar el DAO
+        this.adminDAO = new AdministradorDAO(new ConexionMysql()); // Instanciar el DAO
     }
 
     public boolean iniciarSesion(String nombreUsuario, String contraseña) {
-        return usuarioDAO.verificarCredenciales(nombreUsuario, contraseña);
+        return adminDAO.verificarCredenciales(nombreUsuario, contraseña);
     }
 }

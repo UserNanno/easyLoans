@@ -1,9 +1,15 @@
 package view;
 
+import controller.VerificarController;
+import javax.swing.JOptionPane;
+
 public class JFrameMain extends javax.swing.JFrame {
+    private VerificarController verificarController;
 
     public JFrameMain() {
         initComponents();
+        btnPrestamo.setEnabled(false); // Deshabilitar el botón de préstamo
+        verificarController = new VerificarController();
     }
 
     @SuppressWarnings("unchecked")
@@ -12,9 +18,9 @@ public class JFrameMain extends javax.swing.JFrame {
 
         jLabel3 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        btnVerificarUsuario = new javax.swing.JButton();
+        btnVerificar = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
-        txtDniUsuario = new javax.swing.JTextField();
+        txtDni = new javax.swing.JTextField();
         btnRegistrar = new javax.swing.JButton();
         btnPrestamo = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -27,18 +33,18 @@ public class JFrameMain extends javax.swing.JFrame {
 
         jLabel1.setText("CONSULTAS");
 
-        btnVerificarUsuario.setText("Verificar Usuario");
-        btnVerificarUsuario.addActionListener(new java.awt.event.ActionListener() {
+        btnVerificar.setText("Verificar Usuario");
+        btnVerificar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnVerificarUsuarioActionPerformed(evt);
+                btnVerificarActionPerformed(evt);
             }
         });
 
         jLabel2.setText("Dni Usuario");
 
-        txtDniUsuario.addActionListener(new java.awt.event.ActionListener() {
+        txtDni.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtDniUsuarioActionPerformed(evt);
+                txtDniActionPerformed(evt);
             }
         });
 
@@ -86,9 +92,9 @@ public class JFrameMain extends javax.swing.JFrame {
                         .addContainerGap()
                         .addComponent(jLabel2)
                         .addGap(18, 18, 18)
-                        .addComponent(txtDniUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtDni, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(38, 38, 38)
-                        .addComponent(btnVerificarUsuario))
+                        .addComponent(btnVerificar))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(15, 15, 15)
                         .addComponent(btnRegistrar)
@@ -111,9 +117,9 @@ public class JFrameMain extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnVerificarUsuario)
+                    .addComponent(btnVerificar)
                     .addComponent(jLabel2)
-                    .addComponent(txtDniUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtDni, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(26, 26, 26)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnRegistrar)
@@ -127,9 +133,17 @@ public class JFrameMain extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnVerificarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerificarUsuarioActionPerformed
+    private void btnVerificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerificarActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnVerificarUsuarioActionPerformed
+        String dni = txtDni.getText();
+        if (verificarController.verificarUsuario(dni)) {
+            JOptionPane.showMessageDialog(null, "Usuario verificado", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+            btnPrestamo.setEnabled(true);
+        } else {
+            JOptionPane.showMessageDialog(null, "Usuario no encontrado", "Error", JOptionPane.ERROR_MESSAGE);
+            btnPrestamo.setEnabled(false);
+        }
+    }//GEN-LAST:event_btnVerificarActionPerformed
 
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
         // TODO add your handling code here:
@@ -143,9 +157,9 @@ public class JFrameMain extends javax.swing.JFrame {
         prestamo.setVisible(true);
     }//GEN-LAST:event_btnPrestamoActionPerformed
 
-    private void txtDniUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDniUsuarioActionPerformed
+    private void txtDniActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDniActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtDniUsuarioActionPerformed
+    }//GEN-LAST:event_txtDniActionPerformed
 
     private void btnCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarActionPerformed
         // TODO add your handling code here:
@@ -162,12 +176,12 @@ public class JFrameMain extends javax.swing.JFrame {
     private javax.swing.JButton btnCerrar;
     private javax.swing.JButton btnPrestamo;
     private javax.swing.JButton btnRegistrar;
-    private javax.swing.JButton btnVerificarUsuario;
+    private javax.swing.JButton btnVerificar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblDatosUsuario;
-    private javax.swing.JTextField txtDniUsuario;
+    private javax.swing.JTextField txtDni;
     // End of variables declaration//GEN-END:variables
 }
