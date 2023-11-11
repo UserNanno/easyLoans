@@ -1,6 +1,8 @@
 package view;
 
+import controller.RegistroController;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 public class JFrameRegistro extends javax.swing.JFrame {
 
@@ -8,7 +10,7 @@ public class JFrameRegistro extends javax.swing.JFrame {
         initComponents();
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); //Evitar que se cierre el programa al cerrar la ventana actual
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -150,6 +152,20 @@ public class JFrameRegistro extends javax.swing.JFrame {
 
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
         // TODO add your handling code here:
+        RegistroController registroController = new RegistroController();
+        String dni = txtDni.getText();
+        String apellidos = txtApellidos.getText();
+        String nombres = txtNombres.getText();
+
+        if (registroController.registrarUsuario(dni, apellidos, nombres)) {
+            JOptionPane.showMessageDialog(null, "Registro exitoso", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+            txtDni.setText("");
+            txtApellidos.setText("");
+            txtNombres.setText("");
+            txtDni.requestFocus(); // Establecer el foco en el campo del DNI
+        } else {
+            JOptionPane.showMessageDialog(null, "Error al registrar usuario", "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_btnRegistrarActionPerformed
 
     private void txtNombresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombresActionPerformed
