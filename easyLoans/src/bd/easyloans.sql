@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 11-11-2023 a las 01:50:26
+-- Tiempo de generación: 11-11-2023 a las 16:48:47
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.2.4
 
@@ -38,18 +38,17 @@ CREATE TABLE `administradores` (
 --
 
 INSERT INTO `administradores` (`id_admin`, `user`, `password`) VALUES
-(1, '21200223', 'xmldoot'),
-(2, '21200222', 'xmlroot');
+(1, '21200223', 'xmldoot');
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `categorias`
+-- Estructura de tabla para la tabla `categorías`
 --
 
-CREATE TABLE `categorias` (
-  `id_categoria` int(11) NOT NULL,
-  `nombre_categoria` varchar(50) NOT NULL
+CREATE TABLE `categorías` (
+  `id_categoría` int(11) NOT NULL,
+  `nombre_categoría` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -60,8 +59,8 @@ CREATE TABLE `categorias` (
 
 CREATE TABLE `libros` (
   `id_libro` int(11) NOT NULL,
-  `titulo` varchar(100) NOT NULL,
-  `id_categoria` int(11) DEFAULT NULL,
+  `título` varchar(100) NOT NULL,
+  `id_categoría` int(11) DEFAULT NULL,
   `stock_disponible` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -74,7 +73,7 @@ CREATE TABLE `libros` (
 CREATE TABLE `prestamos` (
   `id_prestamo` int(11) NOT NULL,
   `id_libro` int(11) DEFAULT NULL,
-  `dni_usuario` varchar(8) DEFAULT NULL,
+  `id_usuario` int(11) DEFAULT NULL,
   `fecha_prestamo` datetime NOT NULL,
   `fecha_entrega` datetime NOT NULL,
   `estado` varchar(20) NOT NULL
@@ -83,21 +82,22 @@ CREATE TABLE `prestamos` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `usuario_prestamo`
+-- Estructura de tabla para la tabla `usuarios`
 --
 
-CREATE TABLE `usuario_prestamo` (
+CREATE TABLE `usuarios` (
+  `id_usuario` int(11) NOT NULL,
   `dni_usuario` varchar(8) NOT NULL,
-  `nombres` varchar(70) NOT NULL,
-  `apellidos` varchar(70) NOT NULL
+  `nombre` varchar(50) NOT NULL,
+  `apellido` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Volcado de datos para la tabla `usuario_prestamo`
+-- Volcado de datos para la tabla `usuarios`
 --
 
-INSERT INTO `usuario_prestamo` (`dni_usuario`, `nombres`, `apellidos`) VALUES
-('78801600', 'Juan Mariano', 'Canecillas Contreras');
+INSERT INTO `usuarios` (`id_usuario`, `dni_usuario`, `nombre`, `apellido`) VALUES
+(1, '78801600', 'Juan Mariano', 'Canecillas Contreras');
 
 --
 -- Índices para tablas volcadas
@@ -110,17 +110,17 @@ ALTER TABLE `administradores`
   ADD PRIMARY KEY (`id_admin`);
 
 --
--- Indices de la tabla `categorias`
+-- Indices de la tabla `categorías`
 --
-ALTER TABLE `categorias`
-  ADD PRIMARY KEY (`id_categoria`);
+ALTER TABLE `categorías`
+  ADD PRIMARY KEY (`id_categoría`);
 
 --
 -- Indices de la tabla `libros`
 --
 ALTER TABLE `libros`
   ADD PRIMARY KEY (`id_libro`),
-  ADD KEY `id_categoria` (`id_categoria`);
+  ADD KEY `id_categoría` (`id_categoría`);
 
 --
 -- Indices de la tabla `prestamos`
@@ -128,13 +128,13 @@ ALTER TABLE `libros`
 ALTER TABLE `prestamos`
   ADD PRIMARY KEY (`id_prestamo`),
   ADD KEY `id_libro` (`id_libro`),
-  ADD KEY `dni_usuario` (`dni_usuario`);
+  ADD KEY `id_usuario` (`id_usuario`);
 
 --
--- Indices de la tabla `usuario_prestamo`
+-- Indices de la tabla `usuarios`
 --
-ALTER TABLE `usuario_prestamo`
-  ADD PRIMARY KEY (`dni_usuario`);
+ALTER TABLE `usuarios`
+  ADD PRIMARY KEY (`id_usuario`);
 
 --
 -- AUTO_INCREMENT de las tablas volcadas
@@ -144,13 +144,13 @@ ALTER TABLE `usuario_prestamo`
 -- AUTO_INCREMENT de la tabla `administradores`
 --
 ALTER TABLE `administradores`
-  MODIFY `id_admin` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_admin` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT de la tabla `categorias`
+-- AUTO_INCREMENT de la tabla `categorías`
 --
-ALTER TABLE `categorias`
-  MODIFY `id_categoria` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `categorías`
+  MODIFY `id_categoría` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `libros`
@@ -165,6 +165,12 @@ ALTER TABLE `prestamos`
   MODIFY `id_prestamo` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT de la tabla `usuarios`
+--
+ALTER TABLE `usuarios`
+  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- Restricciones para tablas volcadas
 --
 
@@ -172,14 +178,14 @@ ALTER TABLE `prestamos`
 -- Filtros para la tabla `libros`
 --
 ALTER TABLE `libros`
-  ADD CONSTRAINT `libros_ibfk_1` FOREIGN KEY (`id_categoria`) REFERENCES `categorias` (`id_categoria`);
+  ADD CONSTRAINT `libros_ibfk_1` FOREIGN KEY (`id_categoría`) REFERENCES `categorías` (`id_categoría`);
 
 --
 -- Filtros para la tabla `prestamos`
 --
 ALTER TABLE `prestamos`
   ADD CONSTRAINT `prestamos_ibfk_1` FOREIGN KEY (`id_libro`) REFERENCES `libros` (`id_libro`),
-  ADD CONSTRAINT `prestamos_ibfk_2` FOREIGN KEY (`dni_usuario`) REFERENCES `usuario_prestamo` (`dni_usuario`);
+  ADD CONSTRAINT `prestamos_ibfk_2` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id_usuario`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
