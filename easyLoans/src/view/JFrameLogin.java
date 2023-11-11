@@ -4,9 +4,16 @@ import controller.InicioSesionController;
 import javax.swing.JOptionPane;
 
 public class JFrameLogin extends javax.swing.JFrame {
+
     public JFrameLogin() {
         initComponents();
+        
+        // Simular CLICK en brnEntrar cuando está en el campo txtPassword
+        txtPassword.addActionListener((java.awt.event.ActionEvent evt) -> {
+            btnEntrar.doClick();
+        });
     }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -28,6 +35,12 @@ public class JFrameLogin extends javax.swing.JFrame {
         txtUsuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtUsuarioActionPerformed(evt);
+            }
+        });
+
+        txtPassword.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtPasswordActionPerformed(evt);
             }
         });
 
@@ -116,15 +129,15 @@ public class JFrameLogin extends javax.swing.JFrame {
         // TODO add your handling code here:
         String usuario = txtUsuario.getText();
         String pass = txtPassword.getText();
-        
+
         InicioSesionController controller = new InicioSesionController();
-        
-        if(controller.iniciarSesion(usuario, pass)){
+
+        if (controller.iniciarSesion(usuario, pass)) {
             JOptionPane.showMessageDialog(null, "Inicio de sesión exitoso", "Éxito", JOptionPane.INFORMATION_MESSAGE);
             this.dispose();
             JFrameMain main = new JFrameMain();
             main.setVisible(true);
-        }else{
+        } else {
             JOptionPane.showMessageDialog(null, "Credenciales inválidas", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnEntrarActionPerformed
@@ -139,8 +152,13 @@ public class JFrameLogin extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSalirActionPerformed
 
     private void btnSalirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSalirMouseClicked
-          System.exit(0);
+        System.exit(0);
     }//GEN-LAST:event_btnSalirMouseClicked
+
+    private void txtPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPasswordActionPerformed
+        // TODO add your handling code here:
+
+    }//GEN-LAST:event_txtPasswordActionPerformed
 
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(() -> {
