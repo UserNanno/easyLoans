@@ -43,6 +43,11 @@ public class JFrameRegistro extends javax.swing.JFrame {
                 txtDniActionPerformed(evt);
             }
         });
+        txtDni.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtDniKeyTyped(evt);
+            }
+        });
 
         txtApellidos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -152,22 +157,59 @@ public class JFrameRegistro extends javax.swing.JFrame {
 
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
         // TODO add your handling code here:
-        RegistroController registroController = new RegistroController();
-        String dni = txtDni.getText();
-        String apellidos = txtApellidos.getText();
-        String nombres = txtNombres.getText();
+    RegistroController registroController = new RegistroController();
+    String dni = txtDni.getText();
+    String apellidos = txtApellidos.getText();
+    String nombres = txtNombres.getText();
 
-        if (registroController.registrarUsuario(dni, apellidos, nombres)) {
-            JOptionPane.showMessageDialog(null, "Registro exitoso", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-            txtDni.setText("");
-            txtApellidos.setText("");
-            txtNombres.setText("");
-            txtDni.requestFocus(); // Establecer el foco en el campo del DNI
-        } else {
-            JOptionPane.showMessageDialog(null, "Error al registrar usuario", "Error", JOptionPane.ERROR_MESSAGE);
-        }
+    // Validar el formato del DNI
+    if (validarCampos(dni, apellidos, nombres)  && registroController.registrarUsuario(dni, apellidos, nombres)) {
+        JOptionPane.showMessageDialog(null, "Registro exitoso", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+        txtDni.setText("");
+        txtApellidos.setText("");
+        txtNombres.setText("");
+        txtDni.requestFocus(); // Establecer el foco en el campo del DNI
+    } else {
+        JOptionPane.showMessageDialog(null, "Error al registrar usuario", "Error", JOptionPane.ERROR_MESSAGE);
+    }
     }//GEN-LAST:event_btnRegistrarActionPerformed
+    
+    private boolean validarCampos(String dni, String apellidos, String nombres) {
+    // Verificar que todos los campos estén completos
+    if (dni.isEmpty() || apellidos.isEmpty() || nombres.isEmpty()) {
+        JOptionPane.showMessageDialog(null, "Todos los campos son obligatorios", "Error de validación", JOptionPane.ERROR_MESSAGE);
+        return false;
+    }
 
+    // Validar el formato del DNI
+    if (!validarDni(dni)) {
+        return false;
+    }
+
+    // Validar que los apellidos y nombres no contengan caracteres numéricos
+    if (contieneNumeros(apellidos) || contieneNumeros(nombres)) {
+        JOptionPane.showMessageDialog(null, "Los apellidos y nombres no pueden contener números", "Error de validación", JOptionPane.ERROR_MESSAGE);
+        return false;
+    }
+
+    // Puedes agregar más validaciones según tus requisitos
+
+    return true;
+    }
+    private boolean contieneNumeros(String texto) {
+    // Verificar si el texto contiene números
+    return texto.matches(".*\\d.*");
+    }
+    
+    private boolean validarDni(String dni) {
+    // Verificar que el DNI tenga 8 caracteres y sean todos numéricos
+    if (dni.length() == 8 && dni.matches("\\d+")) {
+        return true;
+    } else {
+        JOptionPane.showMessageDialog(null, "El DNI debe tener exactamente 8 caracteres numéricos", "Error de validación", JOptionPane.ERROR_MESSAGE);
+        return false;
+    }
+}
     private void txtNombresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombresActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtNombresActionPerformed
@@ -184,6 +226,13 @@ public class JFrameRegistro extends javax.swing.JFrame {
         // TODO add your handling code here:
         this.dispose();
     }//GEN-LAST:event_btnCerrarActionPerformed
+
+    private void txtDniKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDniKeyTyped
+        if(txtDni.getText().length() >= 8)
+    {
+        evt.consume();
+    }        
+    }//GEN-LAST:event_txtDniKeyTyped
 
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(() -> {
