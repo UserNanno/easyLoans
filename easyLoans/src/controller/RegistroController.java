@@ -10,8 +10,6 @@ public class RegistroController {
     }
 
     public boolean registrarUsuario(String dni, String apellidos, String nombres) {
-        // Lógica para validar datos, si es necesario
-
         // Llamada al método de inserción en el DAO
         return usuarioDAO.registrarNuevoUsuario(dni, apellidos, nombres);
     }

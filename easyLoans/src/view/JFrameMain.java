@@ -1,6 +1,7 @@
 package view;
 
 import controller.VerificarController;
+
 import javax.swing.JOptionPane;
 
 public class JFrameMain extends javax.swing.JFrame {
