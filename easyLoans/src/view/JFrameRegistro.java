@@ -3,6 +3,7 @@ package view;
 import controller.RegistroController;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import util.ValidationUtil;
 
 public class JFrameRegistro extends javax.swing.JFrame {
 
@@ -41,6 +42,11 @@ public class JFrameRegistro extends javax.swing.JFrame {
         txtDni.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtDniActionPerformed(evt);
+            }
+        });
+        txtDni.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtDniKeyTyped(evt);
             }
         });
 
@@ -157,16 +163,21 @@ public class JFrameRegistro extends javax.swing.JFrame {
         String apellidos = txtApellidos.getText();
         String nombres = txtNombres.getText();
 
-        if (registroController.registrarUsuario(dni, apellidos, nombres)) {
+        // Utilizar la clase ValidationUtil para validar los campos
+        if (ValidationUtil.validarCampos(dni, apellidos, nombres) && registroController.registrarUsuario(dni, apellidos, nombres)) {
             JOptionPane.showMessageDialog(null, "Registro exitoso", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-            txtDni.setText("");
-            txtApellidos.setText("");
-            txtNombres.setText("");
-            txtDni.requestFocus(); // Establecer el foco en el campo del DNI
+            limpiarCampos();
         } else {
             JOptionPane.showMessageDialog(null, "Error al registrar usuario", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnRegistrarActionPerformed
+
+    private void limpiarCampos() {
+        txtDni.setText("");
+        txtApellidos.setText("");
+        txtNombres.setText("");
+        txtDni.requestFocus(); // Establecer el foco en el campo del DNI
+    }
 
     private void txtNombresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombresActionPerformed
         // TODO add your handling code here:
@@ -184,6 +195,12 @@ public class JFrameRegistro extends javax.swing.JFrame {
         // TODO add your handling code here:
         this.dispose();
     }//GEN-LAST:event_btnCerrarActionPerformed
+
+    private void txtDniKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDniKeyTyped
+        if (txtDni.getText().length() >= 8) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtDniKeyTyped
 
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(() -> {
