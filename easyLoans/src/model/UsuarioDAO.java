@@ -1,5 +1,6 @@
 package model;
 
+import arbolBinario.ArbolBinario;
 import persistencia.ConexionBD;
 
 import java.sql.Connection;
@@ -34,9 +35,34 @@ public class UsuarioDAO {
 }
 
     public boolean registrarNuevoUsuario(String dni, String apellidos, String nombres) {
-        String query = "INSERT INTO usuarios (dni_usuario, apellidos, nombres) VALUES (?, ?, ?)";
+        
+        
+        
+        
         try {
             if (conexion != null) {
+                //
+                String query1="SELECT dni_usuario FROM usuarios";
+                PreparedStatement pstmt1 = conexion.obtenerConexion().prepareStatement(query1);
+                ResultSet resultSet = pstmt1.executeQuery();
+                
+                
+                // Insertar valores en el árbol desde la base de datos
+                ArbolBinario arbol = new ArbolBinario();
+                
+               
+                while (resultSet.next()) {
+                int valor = resultSet.getInt("dni_usuario");
+                    System.out.println(valor);
+                    arbol.insertar(valor);
+                }
+                
+//                arbol.imprimirOrden();
+                //
+                
+                
+                
+                String query = "INSERT INTO usuarios (dni_usuario, apellidos, nombres) VALUES (?, ?, ?)";
                 PreparedStatement pstmt = conexion.obtenerConexion().prepareStatement(query);
                 pstmt.setString(1, dni);
                 pstmt.setString(2, apellidos);
