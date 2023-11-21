@@ -33,7 +33,7 @@ public class ArbolBinario {
     void imprimirOrdenRec(Nodo nodo) {
         if (nodo != null) {
             imprimirOrdenRec(nodo.izquierda);
-            System.out.print(nodo.valor + " "); // Agregué espacio después del valor
+            System.out.println(nodo.valor); // Agregué espacio después del valor
             imprimirOrdenRec(nodo.derecha);
         }
     }
