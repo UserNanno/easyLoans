@@ -1,6 +1,6 @@
 package model;
 
-import arbolBinario.ArbolBinario;
+import model.estructuras.ArbolBinario;
 import persistencia.ConexionBD;
 
 import java.sql.Connection;
@@ -63,43 +63,41 @@ public class UsuarioDAO {
         boolean resp = false;
         try {
             if (conexion != null) {
-                //crear arbol binario
+                // Crear arbol binario
                 ArbolBinario arbol = new ArbolBinario();
-                
-                String query1="SELECT dni_usuario FROM usuarios";
+
+                String query1 = "SELECT dni_usuario FROM usuarios";
                 PreparedStatement pstmt1 = conexion.obtenerConexion().prepareStatement(query1);
                 ResultSet resultSet = pstmt1.executeQuery();
-                
+
                 // Insertar valores en el árbol desde la base de datos
                 while (resultSet.next()) {
-                int valor = resultSet.getInt("dni_usuario");
+                    int valor = resultSet.getInt("dni_usuario");
                     arbol.insertar(valor);
                 }
-                
-                //arbol.imprimirOrden();
-                //
-                
-                //Insertando valores en la base de datos
-                if(!arbol.contiene(Integer.parseInt(dni))){
-                String query = "INSERT INTO usuarios (dni_usuario, apellidos, nombres) VALUES (?, ?, ?)";
-                PreparedStatement pstmt = conexion.obtenerConexion().prepareStatement(query);
-                pstmt.setString(1, dni);
-                pstmt.setString(2, apellidos);
-                pstmt.setString(3, nombres);
-                pstmt.executeUpdate();
-                
-                resp= true;
-                }
-                else{
-                    resp= false;
-                    JOptionPane.showMessageDialog(null,"DNI duplicado", "Error", JOptionPane.ERROR_MESSAGE);
+
+                // Imprimir mensaje indicando el uso del árbol
+                System.out.println("Se ha utilizado la estructura de datos ArbolBinario para verificar duplicados.");
+
+                // Insertar valores en la base de datos
+                if (!arbol.contiene(Integer.parseInt(dni))) {
+                    String query = "INSERT INTO usuarios (dni_usuario, apellidos, nombres) VALUES (?, ?, ?)";
+                    PreparedStatement pstmt = conexion.obtenerConexion().prepareStatement(query);
+                    pstmt.setString(1, dni);
+                    pstmt.setString(2, apellidos);
+                    pstmt.setString(3, nombres);
+                    pstmt.executeUpdate();
+
+                    resp = true;
+                } else {
+                    resp = false;
+                    JOptionPane.showMessageDialog(null, "DNI duplicado", "Error", JOptionPane.ERROR_MESSAGE);
                 }
             }
         } catch (SQLException e) {
             System.out.println("Error al registrar usuario: " + e.getMessage());
         }
-       return resp; 
+        return resp;
     }
-    
-    
+
 }

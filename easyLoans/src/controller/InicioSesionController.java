@@ -39,7 +39,7 @@ public class InicioSesionController {
 
         if (indiceUsuario != -1) {
             // Usuario encontrado en la lista ordenada
-            System.out.println("Se encontro el usuario en la posición " + indiceUsuario + " utilizando BusquedaBinaria.");
+            System.out.println("Se encontro el usuario en la posicion " + indiceUsuario + " utilizando BusquedaBinaria.");
 
             if (adminDAO.verificarCredenciales(nombreUsuario, contraseña)) {
                 System.out.println("Inicio de sesiOn exitoso.");
