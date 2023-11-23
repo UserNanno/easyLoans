@@ -151,4 +151,25 @@ public class UsuarioDAO {
         Quicksort quicksort = new Quicksort();
         quicksort.quickSort(array, low, high);
     }
+
+    public int obtenerIdUsuarioPorDNI(String dni) throws SQLException {
+        try {
+            if (conexion != null) {
+                Connection connection = conexion.obtenerConexion();
+                if (connection != null) {
+                    String query = "SELECT id_usuario FROM usuarios WHERE dni_usuario = ?";
+                    try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+                        preparedStatement.setString(1, dni);
+                        ResultSet resultSet = preparedStatement.executeQuery();
+                        if (resultSet.next()) {
+                            return resultSet.getInt("id_usuario");
+                        }
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al obtener ID del usuario: " + e.getMessage());
+        }
+        return -1;
+    }
 }

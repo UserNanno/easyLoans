@@ -2,14 +2,14 @@ package controller;
 
 import model.UsuarioDAO;
 
-public class PrestamoController {
+public class VerificarPrestamoController {
     private UsuarioDAO usuarioDAO;
 
-    public PrestamoController() {
+    public VerificarPrestamoController() {
         this.usuarioDAO = new UsuarioDAO();
     }
 
-    public boolean verificarPrestamo(String codigo, String dni) {
+    public boolean VerificarEstadoPrestamo(String codigo, String dni) {
         // Verificar la existencia del usuario y obtener su información
         if (usuarioDAO.verificarUsuario(dni)) {
             // Verificar la existencia del libro y su disponibilidad
