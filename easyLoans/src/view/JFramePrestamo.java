@@ -195,7 +195,7 @@ public class JFramePrestamo extends javax.swing.JFrame {
     
     // Validar el formato del DNI
     if (validarCampos(codigo,dni)  && verificarController.verificarPrestamo(codigo,dni,devolucion)) {
-        JOptionPane.showMessageDialog(null, "El libro está en préstamo", "Libro en préstamo", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(null, "El libro está en préstamo", "Éxito", JOptionPane.INFORMATION_MESSAGE);
         txtCodigo.setText("");
         txtDniUsuario.setText("");
         txtCodigo.requestFocus(); // Establecer el foco en el campo del DNI
