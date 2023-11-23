@@ -1,9 +1,11 @@
 package view;
 
+import controller.VerificarController;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 public class JFramePrestamo extends javax.swing.JFrame {
 
@@ -185,9 +187,28 @@ public class JFramePrestamo extends javax.swing.JFrame {
     }//GEN-LAST:event_btnGenerarPrestamoActionPerformed
 
     private void btnVerificarLibroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerificarLibroActionPerformed
-        // TODO add your handling code here:
+    VerificarController verificarController = new VerificarController();
+    String dni = txtDniUsuario.getText();
+    
+    // Validar el formato del DNI
+    if (validarCampos(dni)  && verificarController.verificarUsuario(dni)) {
+        JOptionPane.showMessageDialog(null, "Verificación exitosa", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+        txtDniUsuario.setText("");
+        txtDniUsuario.requestFocus(); // Establecer el foco en el campo del DNI
+    } else {
+        JOptionPane.showMessageDialog(null, "Error al verificarr usuario", "Error", JOptionPane.ERROR_MESSAGE);
+    }
     }//GEN-LAST:event_btnVerificarLibroActionPerformed
-
+    
+    private boolean validarCampos(String dni){
+        if (dni.isEmpty()) {
+        JOptionPane.showMessageDialog(null, "Error", "Error de validación", JOptionPane.ERROR_MESSAGE);
+        return false;
+    }
+    return true;
+    }
+    
+    
     private void txtCodigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCodigoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtCodigoActionPerformed

@@ -7,6 +7,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 public class UsuarioDAO {
@@ -83,5 +84,57 @@ public class UsuarioDAO {
        return resp; 
     }
     
+    public boolean verificarUsuario(String dni, String apellidos, String nombres){
+        boolean ver=false;
+        try {
+            if (conexion != null) {               
+               String query1="SELECT dni_usuario FROM usuarios";
+                PreparedStatement pstmt1 = conexion.obtenerConexion().prepareStatement(query1);
+                ResultSet resultSet = pstmt1.executeQuery();
+               
+                 ArrayList<Integer> listaDNI = new ArrayList<>();
+                
+               while (resultSet.next()) {
+                int valor = resultSet.getInt("dni_usuario");
+                    listaDNI.add(valor);
+                }
+               
+               quickSort(listaDNI, 0, listaDNI.size() - 1);
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al registrar usuario: " + e.getMessage());
+        }
+        return ver;
+    }
+    
+    private void quickSort(ArrayList<Integer> array, int low, int high) {
+        if (low < high) {
+            int partitionIndex = partition(array, low, high);
+
+            quickSort(array, low, partitionIndex - 1);
+            quickSort(array, partitionIndex + 1, high);
+        }
+    }
+
+    private int partition(ArrayList<Integer> array, int low, int high) {
+        int pivot = array.get(high);
+        int i = (low - 1);
+
+        for (int j = low; j < high; j++) {
+            if (array.get(j) <= pivot) {
+                i++;
+                int temp = array.get(i);
+                array.set(i, array.get(j));
+                array.set(j, temp);
+            }
+        }
+
+        int temp = array.get(i + 1);
+        array.set(i + 1, array.get(high));
+        array.set(high, temp);
+
+        return i + 1;
+    }
     
 }
+
