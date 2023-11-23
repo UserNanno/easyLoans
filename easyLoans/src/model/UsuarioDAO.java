@@ -11,29 +11,54 @@ import javax.swing.JOptionPane;
 
 public class UsuarioDAO {
 
-    private ConexionBD conexion;
+    private final ConexionBD conexion;
 
     public UsuarioDAO() {
         this.conexion = ConexionBD.obtenerInstancia();
     }
 
     public boolean verificarUsuario(String dni) {
-    try {
-        if (conexion != null) {
-            Connection connection = conexion.obtenerConexion();
-            if (connection != null) {
-                String query = "SELECT * FROM usuarios WHERE dni_usuario = ?";
-                PreparedStatement preparedStatement = connection.prepareStatement(query);
-                preparedStatement.setString(1, dni);
-                ResultSet resultSet = preparedStatement.executeQuery();
-                return resultSet.next(); // Si existe un resultado, el usuario existe
+        try {
+            if (conexion != null) {
+                Connection connection = conexion.obtenerConexion();
+                if (connection != null) {
+                    String query = "SELECT * FROM usuarios WHERE dni_usuario = ?";
+                    PreparedStatement preparedStatement = connection.prepareStatement(query);
+                    preparedStatement.setString(1, dni);
+                    ResultSet resultSet = preparedStatement.executeQuery();
+                    return resultSet.next(); // Si existe un resultado, el usuario existe
+                }
             }
+        } catch (SQLException e) {
+            System.out.println("Error al verificar usuario: " + e.getMessage());
         }
-    } catch (SQLException e) {
-        System.out.println("Error al verificar usuario: " + e.getMessage());
+        return false; // Si hay errores o no se encuentra el usuario
     }
-    return false; // Si hay errores o no se encuentra el usuario
-}
+
+    public String[] obtenerInformacionUsuario(String dni) {
+        try {
+            if (conexion != null) {
+                Connection connection = conexion.obtenerConexion();
+                if (connection != null) {
+                    String query = "SELECT * FROM usuarios WHERE dni_usuario = ?";
+                    PreparedStatement preparedStatement = connection.prepareStatement(query);
+                    preparedStatement.setString(1, dni);
+                    ResultSet resultSet = preparedStatement.executeQuery();
+                    if (resultSet.next()) {
+                        // Retorna un array con la información del usuario
+                        return new String[]{
+                            resultSet.getString("dni_usuario"),
+                            resultSet.getString("apellidos"),
+                            resultSet.getString("nombres")
+                        };
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al obtener información del usuario: " + e.getMessage());
+        }
+        return null; // Retorna null si hay errores o no se encuentra el usuario
+    }
 
     public boolean registrarNuevoUsuario(String dni, String apellidos, String nombres) {
         boolean resp = false;
@@ -71,11 +96,6 @@ public class UsuarioDAO {
                     resp= false;
                     JOptionPane.showMessageDialog(null,"DNI duplicado", "Error", JOptionPane.ERROR_MESSAGE);
                 }
-                    
-                
-               
-                
-
             }
         } catch (SQLException e) {
             System.out.println("Error al registrar usuario: " + e.getMessage());

@@ -2,14 +2,15 @@ package view;
 
 import controller.VerificarController;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 public class JFrameMain extends javax.swing.JFrame {
-    private VerificarController verificarController;
+    private final VerificarController verificarController;
 
     public JFrameMain() {
         initComponents();
         btnPrestamo.setEnabled(false); // Deshabilitar el botón de préstamo
-        verificarController = new VerificarController();
+        verificarController = new VerificarController((DefaultTableModel) tblDatosUsuario.getModel());
     }
 
     @SuppressWarnings("unchecked")
