@@ -10,7 +10,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Date;
 import javax.swing.JOptionPane;
 
 public class UsuarioDAO {
@@ -109,28 +108,21 @@ public class UsuarioDAO {
 
         try {
             if (conexion != null) {
-                // 1. Verificar que existe un usuario con cierto DNI
-                if (verificarUsuario(dni)) {
-                    // 2. Verificar que existe un libro con su código de libro
-                    String queryLibro = "SELECT * FROM libros WHERE codigo_libro = ?";
-                    PreparedStatement pstmtLibro = conexion.obtenerConexion().prepareStatement(queryLibro);
-                    pstmtLibro.setString(1, codigo);
-                    ResultSet resultSetLibro = pstmtLibro.executeQuery();
+                // Obtener lista de códigos de libros de la tabla de libros
+                ArrayList<Integer> listaCodigosLibros = obtenerListaCodigosLibros();
 
-                    if (resultSetLibro.next()) {
-                        // 3. Verificar que el libro tiene stock disponible
-                        int stock = resultSetLibro.getInt("stock");
-                        if (stock > 0) {
-                            // El libro tiene stock disponible, se puede prestar
-                            ver = true;
-                        } else {
-                            System.out.println("El libro no tiene stock disponible.");
-                        }
-                    } else {
-                        System.out.println("No existe un libro con el código proporcionado.");
-                    }
-                } else {
-                    System.out.println("No existe un usuario con el DNI proporcionado.");
+                // Ordenar la lista utilizando el algoritmo de ordenamiento rápido (Quicksort)
+                System.out.println("Utilizando Quicksort para ordenar la lista de codigos de libros.");
+                Quicksort quicksort = new Quicksort();
+                quicksort.quickSort(listaCodigosLibros, 0, listaCodigosLibros.size() - 1);
+
+                // Verificar si el código está presente utilizando la búsqueda binaria
+                int codigoInt = Integer.parseInt(codigo);
+                System.out.println("Utilizando busqueda binaria para verificar la presencia del codigo en la lista ordenada.");
+                if (BusquedaBinaria.busquedaBinariaEnArrayList(listaCodigosLibros, codigoInt) != -1) {
+                    // El código del libro existe en la lista ordenada
+                    // Aquí puedes agregar más lógica si es necesario
+                    ver = true;
                 }
             }
         } catch (SQLException e) {
@@ -138,6 +130,21 @@ public class UsuarioDAO {
         }
 
         return ver;
+    }
+
+    private ArrayList<Integer> obtenerListaCodigosLibros() throws SQLException {
+        ArrayList<Integer> listaCodigosLibros = new ArrayList<>();
+
+        String queryLibros = "SELECT codigo_libro FROM libros";
+        try (PreparedStatement pstmtLibros = conexion.obtenerConexion().prepareStatement(queryLibros); ResultSet resultSetLibros = pstmtLibros.executeQuery()) {
+
+            while (resultSetLibros.next()) {
+                int codigoLibro = resultSetLibros.getInt("codigo_libro");
+                listaCodigosLibros.add(codigoLibro);
+            }
+        }
+
+        return listaCodigosLibros;
     }
 
     public void quickSort(ArrayList<Integer> array, int low, int high) {
