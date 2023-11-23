@@ -1,7 +1,8 @@
-package arbolBinario;
+package model.estructuras;
 
 public class ArbolBinario {
-    Nodo raiz;
+
+    NodoArbolBinario raiz;
 
     public ArbolBinario() {
         raiz = null;
@@ -11,9 +12,9 @@ public class ArbolBinario {
         raiz = insertarNodo(raiz, valor);
     }
 
-    public Nodo insertarNodo(Nodo nodo, int valor) {
+    public NodoArbolBinario insertarNodo(NodoArbolBinario nodo, int valor) {
         if (nodo == null) {
-            nodo = new Nodo(valor);
+            nodo = new NodoArbolBinario(valor);
             return nodo;
         }
 
@@ -30,7 +31,7 @@ public class ArbolBinario {
         imprimirOrdenRec(raiz);
     }
 
-    void imprimirOrdenRec(Nodo nodo) {
+    void imprimirOrdenRec(NodoArbolBinario nodo) {
         if (nodo != null) {
             imprimirOrdenRec(nodo.izquierda);
             System.out.println(nodo.valor); // Agregué espacio después del valor
@@ -42,7 +43,7 @@ public class ArbolBinario {
         return contieneValor(raiz, valor);
     }
 
-    boolean contieneValor(Nodo nodo, int valor) {
+    boolean contieneValor(NodoArbolBinario nodo, int valor) {
         if (nodo == null) {
             return false;
         }
