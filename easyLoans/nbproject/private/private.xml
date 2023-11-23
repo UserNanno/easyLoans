@@ -5,10 +5,10 @@
         <group>
             <file>file:/C:/Users/Piero/Documents/NetBeansProjects/easyLoans/easyLoans/src/persistencia/PruebaConexion.java</file>
             <file>file:/C:/Users/Piero/Documents/NetBeansProjects/easyLoans/easyLoans/src/controller/VerificarController.java</file>
-            <file>file:/C:/Users/Piero/Documents/NetBeansProjects/easyLoans/easyLoans/src/view/JFrameMain.java</file>
             <file>file:/C:/Users/Piero/Documents/NetBeansProjects/easyLoans/easyLoans/src/model/Libro.java</file>
+            <file>file:/C:/Users/Piero/Documents/NetBeansProjects/easyLoans/easyLoans/src/view/JFrameMain.java</file>
             <file>file:/C:/Users/Piero/Documents/NetBeansProjects/easyLoans/easyLoans/src/view/JFrameRegistro.java</file>
-            <file>file:/C:/Users/Piero/Documents/NetBeansProjects/easyLoans/easyLoans/src/view/JFrameLogin.java</file>
+            <file>file:/C:/Users/Piero/Documents/NetBeansProjects/easyLoans/easyLoans/src/persistencia/ConexionMysql.java</file>
             <file>file:/C:/Users/Piero/Documents/NetBeansProjects/easyLoans/easyLoans/src/controller/RegistroController.java</file>
             <file>file:/C:/Users/Piero/Documents/NetBeansProjects/easyLoans/easyLoans/src/controller/InicioSesionController.java</file>
             <file>file:/C:/Users/Piero/Documents/NetBeansProjects/easyLoans/easyLoans/src/arbolBinario/ArbolBinario.java</file>
