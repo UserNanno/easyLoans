@@ -79,7 +79,12 @@ public class VerificarUsuarioController {
         // Recopilar todos los valores de la tabla y agregarlos al modelo
         for (List<EntradaTabla> entradas : tablaHash.getTabla()) {
             for (EntradaTabla entrada : entradas) {
-                tblModel.addRow(new Object[]{entrada.getClave(), entrada.getValor()});
+                String dni = entrada.getClave();
+                String[] informacionUsuario = usuarioDAO.obtenerInformacionUsuario(dni);
+
+                if (informacionUsuario != null) {
+                    tblModel.addRow(new Object[]{dni, informacionUsuario[2], informacionUsuario[1]});
+                }
             }
         }
     }
@@ -94,5 +99,5 @@ public class VerificarUsuarioController {
         }
         return null;
     }
-   
+
 }

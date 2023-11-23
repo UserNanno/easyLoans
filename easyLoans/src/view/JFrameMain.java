@@ -71,7 +71,7 @@ public class JFrameMain extends javax.swing.JFrame {
                 {null, null, null, null}
             },
             new String [] {
-                "Dni", "Nombres", "Apellidos", "Estado"
+                "Dni", "Apellidos", "Nombres", "Estado"
             }
         ));
         jScrollPane1.setViewportView(tblDatosUsuario);
