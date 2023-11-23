@@ -9,12 +9,12 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 public class JFramePrestamo extends javax.swing.JFrame {
-    
+
     public JFramePrestamo() {
         initComponents();
-        
+
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        
+
         // Configurar la fecha mínima como la fecha actual
         jdcFechaDevolucion.setMinSelectableDate(new Date());
 
@@ -25,7 +25,6 @@ public class JFramePrestamo extends javax.swing.JFrame {
 
         //OBTENER LA FECHA DEL jdcFechaDevolucion
         //Date fechaDevolucion = jdcFechaDevolucion.getDate();
-        
         // Obtener la fecha actual
         Date fechaActual = new Date();
 
@@ -169,35 +168,34 @@ public class JFramePrestamo extends javax.swing.JFrame {
     }//GEN-LAST:event_txtDniUsuarioActionPerformed
 
     private void btnGenerarPrestamoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarPrestamoActionPerformed
-     
+
     }//GEN-LAST:event_btnGenerarPrestamoActionPerformed
 
     private void btnVerificarLibroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerificarLibroActionPerformed
-    PrestamoController verificarController = new PrestamoController();
-    String codigo = txtCodigo.getText();
-    String dni = txtDniUsuario.getText();
-    Date devolucion = jdcFechaDevolucion.getDate();
-    
-    // Validar el formato del DNI
-    if (validarCampos(codigo,dni)  && verificarController.verificarPrestamo(codigo,dni,devolucion)) {
-        JOptionPane.showMessageDialog(null, "El libro está en préstamo", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-        txtCodigo.setText("");
-        txtDniUsuario.setText("");
-        txtCodigo.requestFocus(); // Establecer el foco en el campo del DNI
-    } else {
-        JOptionPane.showMessageDialog(null, "Error al verificar prestamo", "Error", JOptionPane.ERROR_MESSAGE);
-    }
+        PrestamoController verificarController = new PrestamoController();
+        String codigo = txtCodigo.getText();
+        String dni = txtDniUsuario.getText();
+
+        // Validar el formato del DNI
+        if (validarCampos(codigo, dni) && verificarController.verificarPrestamo(codigo, dni)) {
+            JOptionPane.showMessageDialog(null, "El libro está disponible para préstamo", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+            txtCodigo.setText("");
+            txtDniUsuario.setText("");
+            txtCodigo.requestFocus(); // Establecer el foco en el campo del DNI
+        } else {
+            JOptionPane.showMessageDialog(null, "El libro no está disponible para préstamo o el usuario no existe", "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_btnVerificarLibroActionPerformed
-    
-    private boolean validarCampos(String codigo, String dni){
+
+    private boolean validarCampos(String codigo, String dni) {
         if (codigo.isEmpty() || dni.isEmpty()) {
-        JOptionPane.showMessageDialog(null, "Error", "Error de validación", JOptionPane.ERROR_MESSAGE);
-        return false;
+            JOptionPane.showMessageDialog(null, "Error", "Error de validación", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        return true;
     }
-    return true;
-    }
-    
-    
+
+
     private void txtCodigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCodigoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtCodigoActionPerformed

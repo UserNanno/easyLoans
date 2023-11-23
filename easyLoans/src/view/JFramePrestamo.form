@@ -39,11 +39,9 @@
                       <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Component id="jdcFechaDevolucion" pref="165" max="32767" attributes="0"/>
-                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="txtCodigo" pref="165" max="32767" attributes="0"/>
-                              <Component id="txtDniUsuario" alignment="0" max="32767" attributes="0"/>
-                              <Component id="txtFechaPrestamo" alignment="0" max="32767" attributes="0"/>
-                          </Group>
+                          <Component id="txtCodigo" pref="165" max="32767" attributes="0"/>
+                          <Component id="txtDniUsuario" alignment="0" max="32767" attributes="0"/>
+                          <Component id="txtFechaPrestamo" alignment="0" max="32767" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
