@@ -1,64 +1,87 @@
 package model;
 
+import arbolBinario.ArbolBinario;
+import persistencia.ConexionBD;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
-import persistencia.ConexionBD;
-import util.DniManager;
+import javax.swing.JOptionPane;
 
 public class UsuarioDAO {
 
-    private final ConexionBD conexion;
-    private final DniManager dniManager;
+    private ConexionBD conexion;
 
     public UsuarioDAO() {
         this.conexion = ConexionBD.obtenerInstancia();
-        this.dniManager = new DniManager();
-        cargarUsuariosRegistrados();
-    }
-
-    private void cargarUsuariosRegistrados() {
-        try (Connection connection = conexion.obtenerConexion(); PreparedStatement preparedStatement = connection.prepareStatement("SELECT dni_usuario FROM usuarios"); ResultSet resultSet = preparedStatement.executeQuery()) {
-
-            while (resultSet.next()) {
-                dniManager.agregarDni(resultSet.getString("dni_usuario"));
-            }
-        } catch (SQLException e) {
-            System.out.println("Error al cargar usuarios registrados: " + e.getMessage());
-        }
     }
 
     public boolean verificarUsuario(String dni) {
-        return dniManager.contieneDni(dni);
+    try {
+        if (conexion != null) {
+            Connection connection = conexion.obtenerConexion();
+            if (connection != null) {
+                String query = "SELECT * FROM usuarios WHERE dni_usuario = ?";
+                PreparedStatement preparedStatement = connection.prepareStatement(query);
+                preparedStatement.setString(1, dni);
+                ResultSet resultSet = preparedStatement.executeQuery();
+                return resultSet.next(); // Si existe un resultado, el usuario existe
+            }
+        }
+    } catch (SQLException e) {
+        System.out.println("Error al verificar usuario: " + e.getMessage());
     }
+    return false; // Si hay errores o no se encuentra el usuario
+}
 
     public boolean registrarNuevoUsuario(String dni, String apellidos, String nombres) {
-        try (Connection connection = conexion.obtenerConexion()) {
-            connection.setAutoCommit(false);
-
-            if (!dniManager.contieneDni(dni)) {
-                String insertQuery = "INSERT INTO usuarios (dni_usuario, apellidos, nombres) VALUES (?, ?, ?)";
-                try (PreparedStatement pstmt = connection.prepareStatement(insertQuery)) {
-                    pstmt.setString(1, dni);
-                    pstmt.setString(2, apellidos);
-                    pstmt.setString(3, nombres);
-
-                    int filasAfectadas = pstmt.executeUpdate();
-                    if (filasAfectadas > 0) {
-                        dniManager.agregarDni(dni);
-                        connection.commit();
-                        return true;
-                    }
+        boolean resp = false;
+        try {
+            if (conexion != null) {
+                //crear arbol binario
+                ArbolBinario arbol = new ArbolBinario();
+                
+                //consulta a base de datos
+                String query1="SELECT dni_usuario FROM usuarios";
+                PreparedStatement pstmt1 = conexion.obtenerConexion().prepareStatement(query1);
+                ResultSet resultSet = pstmt1.executeQuery();
+                
+                // Insertar valores en el árbol desde la base de datos
+                while (resultSet.next()) {
+                int valor = resultSet.getInt("dni_usuario");
+                    arbol.insertar(valor);
                 }
-            }
+                
+                //arbol.imprimirOrden();
+                //
+                
+                //Insertando valores en la base de datos
+                if(!arbol.contiene(Integer.parseInt(dni))){
+                String query = "INSERT INTO usuarios (dni_usuario, apellidos, nombres) VALUES (?, ?, ?)";
+                PreparedStatement pstmt = conexion.obtenerConexion().prepareStatement(query);
+                pstmt.setString(1, dni);
+                pstmt.setString(2, apellidos);
+                pstmt.setString(3, nombres);
+                pstmt.executeUpdate();
+                
+                resp= true;
+                }
+                else{
+                    resp= false;
+                    JOptionPane.showMessageDialog(null,"DNI duplicado", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+                    
+                
+               
+                
 
-            connection.rollback(); // Revierte la transacción si no se cumple la condición
+            }
         } catch (SQLException e) {
             System.out.println("Error al registrar usuario: " + e.getMessage());
         }
-        return false;
+       return resp; 
     }
-
+    
+    
 }

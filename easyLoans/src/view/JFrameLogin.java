@@ -128,7 +128,7 @@ public class JFrameLogin extends javax.swing.JFrame {
     private void btnEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntrarActionPerformed
         // TODO add your handling code here:
         String usuario = txtUsuario.getText();
-        String pass = new String(txtPassword.getPassword()); // Obtener la contraseña de manera segura
+        String pass = txtPassword.getText();
 
         InicioSesionController controller = new InicioSesionController();
 
@@ -148,11 +148,11 @@ public class JFrameLogin extends javax.swing.JFrame {
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
         // TODO add your handling code here:
-        this.dispose();
+        System.exit(0);
     }//GEN-LAST:event_btnSalirActionPerformed
 
     private void btnSalirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSalirMouseClicked
-        this.dispose();
+        System.exit(0);
     }//GEN-LAST:event_btnSalirMouseClicked
 
     private void txtPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPasswordActionPerformed
