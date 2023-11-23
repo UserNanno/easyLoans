@@ -95,8 +95,5 @@ public class VerificarController {
         }
         return null;
     }
-    
-    public boolean verificarPrestamo(String codigo){
-        return usuarioDAO.verificarPrestamo(codigo);
-    }
+   
 }

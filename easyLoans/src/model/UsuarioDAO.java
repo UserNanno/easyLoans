@@ -7,6 +7,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Date;
 import javax.swing.JOptionPane;
 
 public class UsuarioDAO {
@@ -100,4 +102,77 @@ public class UsuarioDAO {
         return resp;
     }
 
+    public boolean verificarPrestamo(String codigo, String dni, Date devolucion){
+        boolean ver = false;
+        try{
+            if(conexion!=null){
+            String query1 = "SELECT id_libro FROM prestamos";
+            PreparedStatement pstmt1 = conexion.obtenerConexion().prepareStatement(query1);
+            ResultSet resultSet = pstmt1.executeQuery();
+            
+            ArrayList<Integer> listaPrestamo = new ArrayList<>();
+            
+            while (resultSet.next()) {
+                    int valor = resultSet.getInt("id_libro");
+                    listaPrestamo.add(valor);
+                }    
+            quickSort(listaPrestamo, 0, listaPrestamo.size() - 1);
+            int codigoInt = Integer.parseInt(codigo);
+            if (binarySearch(listaPrestamo, codigoInt) != -1) {
+                ver = true;
+                }
+            }     
+        }catch(SQLException e){
+            System.out.println("Error al verificarr prestamo: " + e.getMessage());
+        }
+        return ver;
+    }
+    
+    public void quickSort(ArrayList<Integer> array, int low, int high) {
+        if (low < high) {
+            int partitionIndex = partition(array, low, high);
+
+            quickSort(array, low, partitionIndex - 1);
+            quickSort(array, partitionIndex + 1, high);
+        }
+    }
+
+    private int partition(ArrayList<Integer> array, int low, int high) {
+        int pivot = array.get(high);
+        int i = (low - 1);
+
+        for (int j = low; j < high; j++) {
+            if (array.get(j) <= pivot) {
+                i++;
+                int temp = array.get(i);
+                array.set(i, array.get(j));
+                array.set(j, temp);
+            }
+        }
+
+        int temp = array.get(i + 1);
+        array.set(i + 1, array.get(high));
+        array.set(high, temp);
+
+        return i + 1;
+    }
+    private int binarySearch(ArrayList<Integer> array, int target) {
+    int left = 0;
+    int right = array.size() - 1;
+
+    while (left <= right) {
+        int mid = left + (right - left) / 2;
+
+        if (array.get(mid) == target) {
+            return mid; // Encontrado
+        } else if (array.get(mid) < target) {
+            left = mid + 1;
+        } else {
+            right = mid - 1;
+        }
+    }
+
+    return -1; // No encontrado
 }
+    
+    }

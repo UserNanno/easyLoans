@@ -1,5 +1,6 @@
 package view;
 
+import controller.PrestamoController;
 import controller.VerificarController;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -8,7 +9,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 public class JFramePrestamo extends javax.swing.JFrame {
-
+    
     public JFramePrestamo() {
         initComponents();
         
@@ -183,26 +184,28 @@ public class JFramePrestamo extends javax.swing.JFrame {
     }//GEN-LAST:event_txtDniUsuarioActionPerformed
 
     private void btnGenerarPrestamoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarPrestamoActionPerformed
-        // TODO add your handling code here:
+     
     }//GEN-LAST:event_btnGenerarPrestamoActionPerformed
 
     private void btnVerificarLibroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerificarLibroActionPerformed
-    VerificarController verificarController = new VerificarController();
+    PrestamoController verificarController = new PrestamoController();
     String codigo = txtCodigo.getText();
+    String dni = txtDniUsuario.getText();
+    Date devolucion = jdcFechaDevolucion.getDate();
     
     // Validar el formato del DNI
-    if (validarCampos(codigo)  && verificarController.verificarPrestamo(codigo)) {
-        JOptionPane.showMessageDialog(null, "Verificación exitosa", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-        txtDniUsuario.setText("");
+    if (validarCampos(codigo,dni)  && verificarController.verificarPrestamo(codigo,dni,devolucion)) {
+        JOptionPane.showMessageDialog(null, "El libro está en préstamo", "Éxito", JOptionPane.INFORMATION_MESSAGE);
         txtCodigo.setText("");
-        txtDniUsuario.requestFocus(); // Establecer el foco en el campo del DNI
+        txtDniUsuario.setText("");
+        txtCodigo.requestFocus(); // Establecer el foco en el campo del DNI
     } else {
         JOptionPane.showMessageDialog(null, "Error al verificar prestamo", "Error", JOptionPane.ERROR_MESSAGE);
     }
     }//GEN-LAST:event_btnVerificarLibroActionPerformed
     
-    private boolean validarCampos(String codigo){
-        if (codigo.isEmpty()) {
+    private boolean validarCampos(String codigo, String dni){
+        if (codigo.isEmpty() || dni.isEmpty()) {
         JOptionPane.showMessageDialog(null, "Error", "Error de validación", JOptionPane.ERROR_MESSAGE);
         return false;
     }
