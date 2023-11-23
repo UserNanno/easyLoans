@@ -35,7 +35,7 @@ public class InicioSesionController {
         System.out.println("La lista de usuarios ha sido ordenada con Mergesort.");
 
         // Utiliza el algoritmo de búsqueda binaria para buscar el usuario
-        int indiceUsuario = BusquedaBinaria.busquedaBinaria(arrayUsuarios, nombreUsuario);
+        int indiceUsuario = BusquedaBinaria.busquedaBinariaEnArray(arrayUsuarios, nombreUsuario);
 
         if (indiceUsuario != -1) {
             // Usuario encontrado en la lista ordenada

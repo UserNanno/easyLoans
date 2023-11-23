@@ -1,6 +1,8 @@
 package model;
 
+import model.busqueda.BusquedaBinaria;
 import model.estructuras.ArbolBinario;
+import model.ordenamiento.Quicksort;
 import persistencia.ConexionBD;
 
 import java.sql.Connection;
@@ -8,7 +10,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Date;
 import javax.swing.JOptionPane;
 
 public class UsuarioDAO {
@@ -102,77 +103,73 @@ public class UsuarioDAO {
         return resp;
     }
 
-    public boolean verificarPrestamo(String codigo, String dni, Date devolucion){
+    public boolean verificarPrestamo(String codigo, String dni) {
         boolean ver = false;
-        try{
-            if(conexion!=null){
-            String query1 = "SELECT id_libro FROM prestamos";
-            PreparedStatement pstmt1 = conexion.obtenerConexion().prepareStatement(query1);
-            ResultSet resultSet = pstmt1.executeQuery();
-            
-            ArrayList<Integer> listaPrestamo = new ArrayList<>();
-            
-            while (resultSet.next()) {
-                    int valor = resultSet.getInt("id_libro");
-                    listaPrestamo.add(valor);
-                }    
-            quickSort(listaPrestamo, 0, listaPrestamo.size() - 1);
-            int codigoInt = Integer.parseInt(codigo);
-            if (binarySearch(listaPrestamo, codigoInt) != -1) {
-                ver = true;
+
+        try {
+            if (conexion != null) {
+                // Obtener lista de códigos de libros de la tabla de libros
+                ArrayList<Integer> listaCodigosLibros = obtenerListaCodigosLibros();
+
+                // Ordenar la lista utilizando el algoritmo de ordenamiento rápido (Quicksort)
+                System.out.println("Utilizando Quicksort para ordenar la lista de codigos de libros.");
+                Quicksort quicksort = new Quicksort();
+                quicksort.quickSort(listaCodigosLibros, 0, listaCodigosLibros.size() - 1);
+
+                // Verificar si el código está presente utilizando la búsqueda binaria
+                int codigoInt = Integer.parseInt(codigo);
+                System.out.println("Utilizando busqueda binaria para verificar la presencia del codigo en la lista ordenada.");
+                if (BusquedaBinaria.busquedaBinariaEnArrayList(listaCodigosLibros, codigoInt) != -1) {
+                    // El código del libro existe en la lista ordenada
+                    // Aquí puedes agregar más lógica si es necesario
+                    ver = true;
                 }
-            }     
-        }catch(SQLException e){
-            System.out.println("Error al verificarr prestamo: " + e.getMessage());
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al verificar prestamo: " + e.getMessage());
         }
+
         return ver;
     }
-    
-    public void quickSort(ArrayList<Integer> array, int low, int high) {
-        if (low < high) {
-            int partitionIndex = partition(array, low, high);
 
-            quickSort(array, low, partitionIndex - 1);
-            quickSort(array, partitionIndex + 1, high);
-        }
-    }
+    private ArrayList<Integer> obtenerListaCodigosLibros() throws SQLException {
+        ArrayList<Integer> listaCodigosLibros = new ArrayList<>();
 
-    private int partition(ArrayList<Integer> array, int low, int high) {
-        int pivot = array.get(high);
-        int i = (low - 1);
+        String queryLibros = "SELECT codigo_libro FROM libros";
+        try (PreparedStatement pstmtLibros = conexion.obtenerConexion().prepareStatement(queryLibros); ResultSet resultSetLibros = pstmtLibros.executeQuery()) {
 
-        for (int j = low; j < high; j++) {
-            if (array.get(j) <= pivot) {
-                i++;
-                int temp = array.get(i);
-                array.set(i, array.get(j));
-                array.set(j, temp);
+            while (resultSetLibros.next()) {
+                int codigoLibro = resultSetLibros.getInt("codigo_libro");
+                listaCodigosLibros.add(codigoLibro);
             }
         }
 
-        int temp = array.get(i + 1);
-        array.set(i + 1, array.get(high));
-        array.set(high, temp);
-
-        return i + 1;
+        return listaCodigosLibros;
     }
-    private int binarySearch(ArrayList<Integer> array, int target) {
-    int left = 0;
-    int right = array.size() - 1;
 
-    while (left <= right) {
-        int mid = left + (right - left) / 2;
+    public void quickSort(ArrayList<Integer> array, int low, int high) {
+        Quicksort quicksort = new Quicksort();
+        quicksort.quickSort(array, low, high);
+    }
 
-        if (array.get(mid) == target) {
-            return mid; // Encontrado
-        } else if (array.get(mid) < target) {
-            left = mid + 1;
-        } else {
-            right = mid - 1;
+    public int obtenerIdUsuarioPorDNI(String dni) throws SQLException {
+        try {
+            if (conexion != null) {
+                Connection connection = conexion.obtenerConexion();
+                if (connection != null) {
+                    String query = "SELECT id_usuario FROM usuarios WHERE dni_usuario = ?";
+                    try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+                        preparedStatement.setString(1, dni);
+                        ResultSet resultSet = preparedStatement.executeQuery();
+                        if (resultSet.next()) {
+                            return resultSet.getInt("id_usuario");
+                        }
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al obtener ID del usuario: " + e.getMessage());
         }
+        return -1;
     }
-
-    return -1; // No encontrado
 }
-    
-    }
