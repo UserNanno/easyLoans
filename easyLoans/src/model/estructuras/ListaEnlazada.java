@@ -33,7 +33,6 @@ public class ListaEnlazada {
         return count;
     }
 
-    // Agrega este método para obtener la cabeza si realmente lo necesitas fuera de la clase
     public NodoListaEnlazada getCabeza() {
         return cabeza;
     }

@@ -45,7 +45,6 @@ public class UsuarioDAO {
                     preparedStatement.setString(1, dni);
                     ResultSet resultSet = preparedStatement.executeQuery();
                     if (resultSet.next()) {
-                        // Retorna un array con la información del usuario
                         return new String[]{
                             resultSet.getString("dni_usuario"),
                             resultSet.getString("apellidos"),
@@ -67,7 +66,6 @@ public class UsuarioDAO {
                 //crear arbol binario
                 ArbolBinario arbol = new ArbolBinario();
                 
-                //consulta a base de datos
                 String query1="SELECT dni_usuario FROM usuarios";
                 PreparedStatement pstmt1 = conexion.obtenerConexion().prepareStatement(query1);
                 ResultSet resultSet = pstmt1.executeQuery();

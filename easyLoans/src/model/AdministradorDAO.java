@@ -13,8 +13,7 @@ import java.sql.PreparedStatement;
 public class AdministradorDAO {
 
     private final ConexionDB conexion;
-
-    // Constructor que recibe la conexión
+    
     public AdministradorDAO(ConexionDB conexion) {
         this.conexion = conexion;
     }
@@ -40,7 +39,7 @@ public class AdministradorDAO {
         List<String> usuarios = new ArrayList<>();
 
         try {
-            Connection connection = conexion.obtenerConexion(); // Ajusta según tu lógica de conexión
+            Connection connection = conexion.obtenerConexion();
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery("SELECT user FROM administradores");
 
@@ -53,7 +52,7 @@ public class AdministradorDAO {
             statement.close();
             connection.close();
         } catch (SQLException e) {
-            e.printStackTrace(); // Manejo adecuado de excepciones en tu aplicación
+            e.printStackTrace();
         }
 
         return usuarios;
