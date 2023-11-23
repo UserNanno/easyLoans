@@ -3,11 +3,15 @@ package model;
 import persistencia.ConexionBD.ConexionDB;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+import java.sql.PreparedStatement;
 
 public class AdministradorDAO {
+
     private final ConexionDB conexion;
 
     // Constructor que recibe la conexión
@@ -31,4 +35,28 @@ public class AdministradorDAO {
         }
         return false; // Si hay errores o no se encuentra coincidencia
     }
+
+    public List<String> obtenerUsuariosDesdeBD() {
+        List<String> usuarios = new ArrayList<>();
+
+        try {
+            Connection connection = conexion.obtenerConexion(); // Ajusta según tu lógica de conexión
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT user FROM administradores");
+
+            while (resultSet.next()) {
+                String user = resultSet.getString("user");
+                usuarios.add(user);
+            }
+
+            resultSet.close();
+            statement.close();
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace(); // Manejo adecuado de excepciones en tu aplicación
+        }
+
+        return usuarios;
+    }
+
 }
