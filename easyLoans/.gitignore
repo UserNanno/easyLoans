@@ -9,10 +9,6 @@
 *.nar
 hs_err_pid*
 replay_pid*
-<<<<<<< HEAD
-/easyLoans/nbproject/private/
-/easyLoans/build/
-=======
 
 ##############################
 ## Maven
@@ -87,4 +83,3 @@ nb-configuration.xml
 ## OS X
 ##############################
 .DS_Store
->>>>>>> master

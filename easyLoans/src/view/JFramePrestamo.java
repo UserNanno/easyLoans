@@ -1,13 +1,24 @@
 package view;
 
+import controller.GenerarPrestamoController;
+import controller.VerificarPrestamoController;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import model.PrestamoDAO;
+import model.UsuarioDAO;
 
 public class JFramePrestamo extends javax.swing.JFrame {
 
     public JFramePrestamo() {
         initComponents();
+        jdcFechaDevolucion.setEnabled(false);
+
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
         // Configurar la fecha mínima como la fecha actual
         jdcFechaDevolucion.setMinSelectableDate(new Date());
 
@@ -18,7 +29,6 @@ public class JFramePrestamo extends javax.swing.JFrame {
 
         //OBTENER LA FECHA DEL jdcFechaDevolucion
         //Date fechaDevolucion = jdcFechaDevolucion.getDate();
-        
         // Obtener la fecha actual
         Date fechaActual = new Date();
 
@@ -100,20 +110,20 @@ public class JFramePrestamo extends javax.swing.JFrame {
                 .addGap(23, 23, 23)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel1)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel2)
-                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGap(51, 51, 51)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGap(27, 27, 27)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jdcFechaDevolucion, javax.swing.GroupLayout.DEFAULT_SIZE, 165, Short.MAX_VALUE)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addComponent(txtCodigo, javax.swing.GroupLayout.DEFAULT_SIZE, 165, Short.MAX_VALUE)
                                 .addComponent(txtDniUsuario)
-                                .addComponent(txtFechaPrestamo)
-                                .addComponent(jdcFechaDevolucion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                .addComponent(txtFechaPrestamo)))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -143,15 +153,15 @@ public class JFramePrestamo extends javax.swing.JFrame {
                             .addComponent(jLabel4)
                             .addComponent(txtFechaPrestamo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel5)
-                            .addComponent(jdcFechaDevolucion, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jdcFechaDevolucion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(77, 77, 77)
                         .addComponent(btnVerificarLibro)
                         .addGap(26, 26, 26)
                         .addComponent(btnGenerarPrestamo)))
-                .addContainerGap(45, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -162,12 +172,82 @@ public class JFramePrestamo extends javax.swing.JFrame {
     }//GEN-LAST:event_txtDniUsuarioActionPerformed
 
     private void btnGenerarPrestamoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarPrestamoActionPerformed
-        // TODO add your handling code here:
+
+        try {
+            String codigo = txtCodigo.getText();
+            String dni = txtDniUsuario.getText();
+
+            // Validar el formato del DNI
+            if (validarCampos(codigo, dni)) {
+                int idLibro = obtenerIdLibro(codigo);
+                int idUsuario = obtenerIdUsuario(dni);
+
+                if (idLibro != -1 && idUsuario != -1) {
+                    // Obtener la fecha de devolución seleccionada por el usuario
+                    Date fechaDevolucion = jdcFechaDevolucion.getDate();
+
+                    // Validar que se haya seleccionado una fecha
+                    if (fechaDevolucion != null) {
+                        // Crear una instancia de GenerarPrestamoController
+                        GenerarPrestamoController generarPrestamoController = new GenerarPrestamoController();
+
+                        // Llamada al método de generación de préstamo en el controlador
+                        boolean prestamoGenerado = generarPrestamoController.generarPrestamo(idLibro, idUsuario, fechaDevolucion);
+
+                        if (prestamoGenerado) {
+                            JOptionPane.showMessageDialog(null, "Préstamo generado con éxito", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                            // Puedes realizar otras acciones después de generar el préstamo si es necesario
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Error al generar el préstamo", "Error", JOptionPane.ERROR_MESSAGE);
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Selecciona una fecha de devolución", "Error", JOptionPane.ERROR_MESSAGE);
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "Error al obtener ID del libro o del usuario", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Error de validación", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (java.sql.SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error al obtener ID del libro o del usuario", "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_btnGenerarPrestamoActionPerformed
 
     private void btnVerificarLibroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerificarLibroActionPerformed
-        // TODO add your handling code here:
+        VerificarPrestamoController verificarController = new VerificarPrestamoController();
+        String codigo = txtCodigo.getText();
+        String dni = txtDniUsuario.getText();
+
+        // Validar el formato del DNI
+        if (validarCampos(codigo, dni) && verificarController.VerificarEstadoPrestamo(codigo, dni)) {
+            JOptionPane.showMessageDialog(null, "El libro está disponible para préstamo", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+            jdcFechaDevolucion.setEnabled(true); // Activar el jdcFechaDevolucion
+        } else {
+            JOptionPane.showMessageDialog(null, "El libro no está disponible para préstamo o el usuario no existe", "Error", JOptionPane.ERROR_MESSAGE);
+            jdcFechaDevolucion.setEnabled(false); // Desactivar el jdcFechaDevolucion
+        }
     }//GEN-LAST:event_btnVerificarLibroActionPerformed
+
+    private boolean validarCampos(String codigo, String dni) {
+        if (codigo.isEmpty() || dni.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Error", "Error de validación", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        return true;
+    }
+
+    private int obtenerIdLibro(String codigo) throws SQLException {
+        PrestamoDAO prestamoDAO = new PrestamoDAO();
+        return prestamoDAO.obtenerIdLibroPorCodigo(codigo);
+    }
+
+    private int obtenerIdUsuario(String dni) throws SQLException {
+        UsuarioDAO usuarioDAO = new UsuarioDAO();
+        return usuarioDAO.obtenerIdUsuarioPorDNI(dni);
+    }
+
 
     private void txtCodigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCodigoActionPerformed
         // TODO add your handling code here:
@@ -176,6 +256,11 @@ public class JFramePrestamo extends javax.swing.JFrame {
     private void txtFechaPrestamoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFechaPrestamoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtFechaPrestamoActionPerformed
+
+    private void btnCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_btnCerrarActionPerformed
 
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(() -> {
