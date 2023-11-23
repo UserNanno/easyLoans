@@ -8,6 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import javax.swing.JOptionPane;
 
 public class UsuarioDAO {
@@ -84,26 +85,26 @@ public class UsuarioDAO {
        return resp; 
     }
     
-    public boolean verificarUsuario(String dni, String apellidos, String nombres){
+    public boolean verificarPrestamo(String codigo){
         boolean ver=false;
         try {
-            if (conexion != null) {               
-               String query1="SELECT dni_usuario FROM usuarios";
+        if (conexion != null) {
+             String query1="SELECT id_libro FROM prestamos";
                 PreparedStatement pstmt1 = conexion.obtenerConexion().prepareStatement(query1);
                 ResultSet resultSet = pstmt1.executeQuery();
-               
-                 ArrayList<Integer> listaDNI = new ArrayList<>();
                 
-               while (resultSet.next()) {
-                int valor = resultSet.getInt("dni_usuario");
-                    listaDNI.add(valor);
+                ArrayList<Integer> listaPrestamo = new ArrayList<>();
+                
+                // Insertar valores en el árbol desde la base de datos
+                while (resultSet.next()) {
+                int valor = resultSet.getInt("id_libro");
+                    listaPrestamo.add(valor);
                 }
-               
-               quickSort(listaDNI, 0, listaDNI.size() - 1);
             }
         } catch (SQLException e) {
-            System.out.println("Error al registrar usuario: " + e.getMessage());
-        }
+        System.out.println("Error al verificar prestamo: " + e.getMessage());
+    }
+      
         return ver;
     }
     

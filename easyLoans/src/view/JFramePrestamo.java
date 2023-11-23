@@ -188,20 +188,21 @@ public class JFramePrestamo extends javax.swing.JFrame {
 
     private void btnVerificarLibroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerificarLibroActionPerformed
     VerificarController verificarController = new VerificarController();
-    String dni = txtDniUsuario.getText();
+    String codigo = txtCodigo.getText();
     
     // Validar el formato del DNI
-    if (validarCampos(dni)  && verificarController.verificarUsuario(dni)) {
+    if (validarCampos(codigo)  && verificarController.verificarPrestamo(codigo)) {
         JOptionPane.showMessageDialog(null, "Verificación exitosa", "Éxito", JOptionPane.INFORMATION_MESSAGE);
         txtDniUsuario.setText("");
+        txtCodigo.setText("");
         txtDniUsuario.requestFocus(); // Establecer el foco en el campo del DNI
     } else {
-        JOptionPane.showMessageDialog(null, "Error al verificarr usuario", "Error", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(null, "Error al verificar prestamo", "Error", JOptionPane.ERROR_MESSAGE);
     }
     }//GEN-LAST:event_btnVerificarLibroActionPerformed
     
-    private boolean validarCampos(String dni){
-        if (dni.isEmpty()) {
+    private boolean validarCampos(String codigo){
+        if (codigo.isEmpty()) {
         JOptionPane.showMessageDialog(null, "Error", "Error de validación", JOptionPane.ERROR_MESSAGE);
         return false;
     }
