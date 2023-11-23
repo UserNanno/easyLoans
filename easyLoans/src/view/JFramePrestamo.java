@@ -1,7 +1,6 @@
 package view;
 
 import controller.PrestamoController;
-import controller.VerificarController;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -12,6 +11,7 @@ public class JFramePrestamo extends javax.swing.JFrame {
 
     public JFramePrestamo() {
         initComponents();
+        jdcFechaDevolucion.setEnabled(false);
 
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
@@ -179,11 +179,10 @@ public class JFramePrestamo extends javax.swing.JFrame {
         // Validar el formato del DNI
         if (validarCampos(codigo, dni) && verificarController.verificarPrestamo(codigo, dni)) {
             JOptionPane.showMessageDialog(null, "El libro está disponible para préstamo", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-            txtCodigo.setText("");
-            txtDniUsuario.setText("");
-            txtCodigo.requestFocus(); // Establecer el foco en el campo del DNI
+            jdcFechaDevolucion.setEnabled(true); // Activar el jdcFechaDevolucion
         } else {
             JOptionPane.showMessageDialog(null, "El libro no está disponible para préstamo o el usuario no existe", "Error", JOptionPane.ERROR_MESSAGE);
+            jdcFechaDevolucion.setEnabled(false); // Desactivar el jdcFechaDevolucion
         }
     }//GEN-LAST:event_btnVerificarLibroActionPerformed
 
