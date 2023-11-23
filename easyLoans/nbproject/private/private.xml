@@ -7,15 +7,21 @@
             <file>file:/C:/Users/Piero/Documents/NetBeansProjects/easyLoans/easyLoans/src/controller/VerificarController.java</file>
             <file>file:/C:/Users/Piero/Documents/NetBeansProjects/easyLoans/easyLoans/src/model/Libro.java</file>
             <file>file:/C:/Users/Piero/Documents/NetBeansProjects/easyLoans/easyLoans/src/view/JFrameMain.java</file>
+            <file>file:/C:/Users/Piero/Documents/NetBeansProjects/easyLoans/easyLoans/src/model/estructuras/ArbolBinario.java</file>
             <file>file:/C:/Users/Piero/Documents/NetBeansProjects/easyLoans/easyLoans/src/view/JFrameRegistro.java</file>
+            <file>file:/C:/Users/Piero/Documents/NetBeansProjects/easyLoans/easyLoans/src/model/estructuras/NodoArbolBinario.java</file>
+            <file>file:/C:/Users/Piero/Documents/NetBeansProjects/easyLoans/easyLoans/src/model/estructuras/EntradaTabla.java</file>
             <file>file:/C:/Users/Piero/Documents/NetBeansProjects/easyLoans/easyLoans/src/persistencia/ConexionMysql.java</file>
             <file>file:/C:/Users/Piero/Documents/NetBeansProjects/easyLoans/easyLoans/src/controller/RegistroController.java</file>
             <file>file:/C:/Users/Piero/Documents/NetBeansProjects/easyLoans/easyLoans/src/controller/InicioSesionController.java</file>
-            <file>file:/C:/Users/Piero/Documents/NetBeansProjects/easyLoans/easyLoans/src/arbolBinario/ArbolBinario.java</file>
+            <file>file:/C:/Users/Piero/Documents/NetBeansProjects/easyLoans/easyLoans/src/model/estructuras/NodoListaEnlazada.java</file>
+            <file>file:/C:/Users/Piero/Documents/NetBeansProjects/easyLoans/easyLoans/src/controller/PrestamoController.java</file>
             <file>file:/C:/Users/Piero/Documents/NetBeansProjects/easyLoans/easyLoans/src/model/AdministradorDAO.java</file>
+            <file>file:/C:/Users/Piero/Documents/NetBeansProjects/easyLoans/easyLoans/src/model/estructuras/ListaEnlazada.java</file>
+            <file>file:/C:/Users/Piero/Documents/NetBeansProjects/easyLoans/easyLoans/src/model/ordenamiento/Mergesort.java</file>
             <file>file:/C:/Users/Piero/Documents/NetBeansProjects/easyLoans/easyLoans/src/model/UsuarioDAO.java</file>
+            <file>file:/C:/Users/Piero/Documents/NetBeansProjects/easyLoans/easyLoans/src/model/estructuras/TablaHash.java</file>
             <file>file:/C:/Users/Piero/Documents/NetBeansProjects/easyLoans/easyLoans/src/view/JFramePrestamo.java</file>
-            <file>file:/C:/Users/Piero/Documents/NetBeansProjects/easyLoans/easyLoans/src/arbolBinario/Nodo.java</file>
         </group>
     </open-files>
 </project-private>
