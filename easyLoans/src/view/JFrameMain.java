@@ -65,13 +65,13 @@ public class JFrameMain extends javax.swing.JFrame {
 
         tblDatosUsuario.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
             },
             new String [] {
-                "Dni", "Apellidos", "Nombres", "Estado"
+                "Dni", "Apellidos", "Nombres"
             }
         ));
         jScrollPane1.setViewportView(tblDatosUsuario);
