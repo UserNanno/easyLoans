@@ -16,6 +16,7 @@ public class JFramePrestamo extends javax.swing.JFrame {
     public JFramePrestamo() {
         initComponents();
         jdcFechaDevolucion.setEnabled(false);
+        btnGenerarPrestamo.setEnabled(false);
 
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
@@ -224,6 +225,7 @@ public class JFramePrestamo extends javax.swing.JFrame {
         if (validarCampos(codigo, dni) && verificarController.VerificarEstadoPrestamo(codigo, dni)) {
             JOptionPane.showMessageDialog(null, "El libro está disponible para préstamo", "Éxito", JOptionPane.INFORMATION_MESSAGE);
             jdcFechaDevolucion.setEnabled(true); // Activar el jdcFechaDevolucion
+            btnGenerarPrestamo.setEnabled(true);
         } else {
             JOptionPane.showMessageDialog(null, "El libro no está disponible para préstamo o el usuario no existe", "Error", JOptionPane.ERROR_MESSAGE);
             jdcFechaDevolucion.setEnabled(false); // Desactivar el jdcFechaDevolucion
